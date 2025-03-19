@@ -1,0 +1,79 @@
+.for-you-page {
+  padding: 20px 0;
+}
+
+.for-you-page .card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.for-you-page h1 {
+  margin-top: 0;
+  color: #333;
+}
+
+.for-you-page .lead {
+  margin-bottom: 20px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-tabs {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  overflow-x: auto;
+}
+
+.filter-tab {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.filter-tab.active {
+  color: #17a2b8;
+  border-bottom-color: #17a2b8;
+}
+
+.loading-spinner {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.no-posts {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .filter-tabs {
+    justify-content: space-between;
+  }
+  
+  .filter-tab {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}
