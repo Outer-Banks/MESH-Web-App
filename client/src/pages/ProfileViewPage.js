@@ -25,6 +25,13 @@ const dummyProfiles = {
       description: 'AI-powered platform that helps businesses automate customer support and improve customer experience.',
       longDescription: 'TechInnovate is revolutionizing customer support with our AI-powered platform. We use machine learning algorithms to understand customer queries and provide instant, accurate responses. Our solution helps businesses reduce support costs by up to 60% while improving customer satisfaction scores. We\'re targeting the growing market of e-commerce and SaaS companies across APAC.',
       fundingNeeded: 750000,
+      fundingSecured: 115000,
+      fundingMetrics: {
+        investorCount: 3,
+        avgInvestmentSize: 38333,
+        investorLocations: ['Singapore', 'Hong Kong'],
+        investorIndustries: ['Technology', 'Fintech', 'SaaS']
+      },
       metrics: {
         customers: 50,
         mrr: 25000,
@@ -54,6 +61,13 @@ const dummyProfiles = {
       description: 'Renewable energy solutions for residential and commercial properties across Southeast Asia.',
       longDescription: 'GreenEnergy Solutions is on a mission to make renewable energy accessible to everyone in Southeast Asia. Our innovative solar and wind energy systems are designed specifically for the region\'s climate and energy needs. We offer flexible financing options and a user-friendly monitoring app that allows customers to track their energy production and savings in real-time.',
       fundingNeeded: 1200000,
+      fundingSecured: 350000,
+      fundingMetrics: {
+        investorCount: 5,
+        avgInvestmentSize: 70000,
+        investorLocations: ['Singapore', 'Thailand', 'Malaysia'],
+        investorIndustries: ['Cleantech', 'Sustainability', 'Energy']
+      },
       metrics: {
         installations: 120,
         revenue: '1.8M USD (2024 projected)',
@@ -274,6 +288,12 @@ const ProfileViewPage = () => {
             >
               Documents
             </button>
+            <button 
+              className={`tab-btn ${activeTab === 'funding' ? 'active' : ''}`}
+              onClick={() => setActiveTab('funding')}
+            >
+              Funding
+            </button>
           </>
         ) : (
           <>
@@ -309,7 +329,65 @@ const ProfileViewPage = () => {
               {role === 'startup' && (
                 <div className="funding-info">
                   <h3>Funding Needed</h3>
-                  <div className="funding-amount">{formatFunding(profile.fundingNeeded)}</div>
+                  <div className="funding-progress">
+                    <div className="funding-simple-view">
+                      <div className="funding-amount">{formatFunding(profile.fundingNeeded)}</div>
+                      <div 
+                        className="progress-bar-container"
+                        onClick={() => {
+                          const details = document.querySelector('.funding-details');
+                          const simpleView = document.querySelector('.funding-simple-view');
+                          
+                          if (details.classList.contains('active')) {
+                            details.classList.remove('active');
+                            simpleView.classList.remove('hidden');
+                          } else {
+                            details.classList.add('active');
+                            simpleView.classList.add('hidden');
+                          }
+                        }}
+                      >
+                        <div 
+                          className="progress-bar" 
+                          style={{ width: `${Math.min(100, (profile.fundingSecured / profile.fundingNeeded) * 100)}%` }}
+                        ></div>
+                      </div>
+                      <div className="funding-percentage">
+                        {Math.round((profile.fundingSecured / profile.fundingNeeded) * 100)}% funded
+                      </div>
+                    </div>
+                    
+                    <div className="funding-details">
+                      <div className="funding-amounts">
+                        <div className="funding-amount">
+                          <span className="funding-label">Target:</span> {formatFunding(profile.fundingNeeded)}
+                        </div>
+                        <div className="funding-amount">
+                          <span className="funding-label">Secured:</span> {formatFunding(profile.fundingSecured)}
+                        </div>
+                        <div className="funding-amount">
+                          <span className="funding-label">Remaining:</span> {formatFunding(profile.fundingNeeded - profile.fundingSecured)}
+                        </div>
+                      </div>
+                      <div className="progress-bar-container">
+                        <div 
+                          className="progress-bar" 
+                          style={{ width: `${Math.min(100, (profile.fundingSecured / profile.fundingNeeded) * 100)}%` }}
+                        ></div>
+                      </div>
+                      <div className="funding-percentage">
+                        {Math.round((profile.fundingSecured / profile.fundingNeeded) * 100)}% funded
+                      </div>
+                      <div className="funding-metrics-summary">
+                        <div className="metric">
+                          <i className="fas fa-users"></i> {profile.fundingMetrics.investorCount} investors
+                        </div>
+                        <div className="metric">
+                          <i className="fas fa-map-marker-alt"></i> From {profile.fundingMetrics.investorLocations.length} locations
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
               
@@ -454,6 +532,51 @@ const ProfileViewPage = () => {
                     </button>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'funding' && role === 'startup' && (
+          <div className="funding-tab">
+            <div className="card">
+              <h2>Funding</h2>
+              <div className="funding-grid">
+                <div className="funding-item">
+                  <div className="funding-icon">
+                    <i className="fas fa-dollar-sign"></i>
+                  </div>
+                  <div className="funding-value">{formatFunding(profile.fundingSecured)}</div>
+                  <div className="funding-label">Funding Secured</div>
+                </div>
+                <div className="funding-item">
+                  <div className="funding-icon">
+                    <i className="fas fa-users"></i>
+                  </div>
+                  <div className="funding-value">{profile.fundingMetrics.investorCount}</div>
+                  <div className="funding-label">Investor Count</div>
+                </div>
+                <div className="funding-item">
+                  <div className="funding-icon">
+                    <i className="fas fa-chart-line"></i>
+                  </div>
+                  <div className="funding-value">{formatFunding(profile.fundingMetrics.avgInvestmentSize)}</div>
+                  <div className="funding-label">Average Investment Size</div>
+                </div>
+                <div className="funding-item">
+                  <div className="funding-icon">
+                    <i className="fas fa-map-marker-alt"></i>
+                  </div>
+                  <div className="funding-value">{profile.fundingMetrics.investorLocations.join(', ')}</div>
+                  <div className="funding-label">Investor Locations</div>
+                </div>
+                <div className="funding-item">
+                  <div className="funding-icon">
+                    <i className="fas fa-industry"></i>
+                  </div>
+                  <div className="funding-value">{profile.fundingMetrics.investorIndustries.join(', ')}</div>
+                  <div className="funding-label">Investor Industries</div>
+                </div>
               </div>
             </div>
           </div>

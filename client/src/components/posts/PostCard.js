@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import defaultImage from '../../assets/default-post.jpg';
+import getImagePath from '../../utils/imagePaths';
 
 const PostCard = ({ post }) => {
   const { author, content, image, likes, comments, timestamp } = post;
@@ -22,7 +23,7 @@ const PostCard = ({ post }) => {
         <Link to={`/profile/${author.role}/${author.id}`} className="post-author">
           <div className="avatar">
             <img 
-              src={author.avatar || defaultImage} 
+              src={getImagePath(author.avatar) || defaultImage} 
               alt={author.name} 
               onError={handleImageError}
             />
@@ -42,7 +43,7 @@ const PostCard = ({ post }) => {
         {image && (
           <div className="post-image">
             <img 
-              src={image} 
+              src={getImagePath(image)} 
               alt="Post content" 
               onError={handleImageError}
             />

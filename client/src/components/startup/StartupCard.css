@@ -5,6 +5,7 @@
   margin-bottom: 20px;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
 }
 
 .startup-card:hover {
@@ -80,12 +81,10 @@
 }
 
 .funding-info {
+  margin-top: 12px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background-color: #f9f9f9;
-  padding: 10px 15px;
-  border-radius: 4px;
+  gap: 8px;
 }
 
 .funding-label {
@@ -94,8 +93,34 @@
 }
 
 .funding-amount {
-  font-weight: 600;
-  color: #28a745;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.funding-progress {
+  margin-top: 10px;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color) 0%, #f44336 100%);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: #555;
+  text-align: right;
 }
 
 .startup-actions {
@@ -129,4 +154,21 @@
 
 .startup-actions .btn:hover {
   opacity: 0.9;
+}
+
+/* Featured banner styling */
+.featured-banner {
+  position: absolute;
+  top: 20px;
+  right: -30px;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 5px 30px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transform: rotate(45deg);
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }

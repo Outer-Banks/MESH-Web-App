@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { ConnectionContext } from '../context/ConnectionContext';
 import StartupCard from '../components/startup/StartupCard';
+import { toast } from 'react-toastify';
 import './BrowseStartupsPage.css';
 
 // Dummy data for startups
@@ -12,7 +14,8 @@ const dummyStartups = [
     industry: 'Technology',
     location: 'Singapore',
     description: 'AI-powered platform that helps businesses automate customer support and improve customer experience.',
-    fundingNeeded: 750000
+    fundingNeeded: 750000,
+    verified: true
   },
   {
     id: 102,
@@ -63,6 +66,7 @@ const dummyStartups = [
 
 const BrowseStartupsPage = () => {
   const { user } = useContext(AuthContext);
+  const { sendConnectionRequest, error, clearError } = useContext(ConnectionContext);
   const [startups, setStartups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
@@ -71,6 +75,10 @@ const BrowseStartupsPage = () => {
     fundingRange: ''
   });
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedStartup, setSelectedStartup] = useState(null);
+  const [connectionMessage, setConnectionMessage] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     // In a real app, you would fetch startups from an API
@@ -80,6 +88,13 @@ const BrowseStartupsPage = () => {
       setLoading(false);
     }, 1000);
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      clearError();
+    }
+  }, [error, clearError]);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -100,6 +115,35 @@ const BrowseStartupsPage = () => {
       fundingRange: ''
     });
     setSearchTerm('');
+  };
+
+  const handleConnect = (startup) => {
+    setSelectedStartup(startup);
+    setConnectionMessage('');
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedStartup(null);
+    setConnectionMessage('');
+  };
+
+  const handleMessageChange = (e) => {
+    setConnectionMessage(e.target.value);
+  };
+
+  const handleSendRequest = async () => {
+    if (!selectedStartup) return;
+    
+    setIsSubmitting(true);
+    const success = await sendConnectionRequest(selectedStartup.id, connectionMessage);
+    setIsSubmitting(false);
+    
+    if (success) {
+      toast.success(`Connection request sent to ${selectedStartup.name}`);
+      handleCloseModal();
+    }
   };
 
   // Filter startups based on criteria
@@ -216,7 +260,7 @@ const BrowseStartupsPage = () => {
             {filteredStartups.length > 0 ? (
               filteredStartups.map(startup => (
                 <div key={startup.id} className="startup-item">
-                  <StartupCard startup={startup} />
+                  <StartupCard startup={startup} handleConnect={handleConnect} />
                 </div>
               ))
             ) : (
@@ -225,6 +269,49 @@ const BrowseStartupsPage = () => {
           </div>
         )}
       </div>
+
+      {/* Connection Request Modal */}
+      {showModal && selectedStartup && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2>Connect with {selectedStartup.name}</h2>
+              <button className="close-button" onClick={handleCloseModal}>
+                <i className="fas fa-times"></i>
+              </button>
+            </div>
+            <div className="modal-body">
+              <p>Send a connection request to {selectedStartup.name}. Include a brief message explaining why you'd like to connect.</p>
+              <div className="form-group">
+                <label htmlFor="connectionMessage">Message (optional)</label>
+                <textarea
+                  id="connectionMessage"
+                  rows="4"
+                  placeholder="Hi, I'm interested in your startup and would like to discuss potential investment opportunities..."
+                  value={connectionMessage}
+                  onChange={handleMessageChange}
+                ></textarea>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button 
+                className="btn btn-dark" 
+                onClick={handleCloseModal}
+                disabled={isSubmitting}
+              >
+                Cancel
+              </button>
+              <button 
+                className="btn btn-primary" 
+                onClick={handleSendRequest}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Sending...' : 'Send Request'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

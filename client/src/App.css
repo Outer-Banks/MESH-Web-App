@@ -40,9 +40,13 @@ ul {
 
 .container {
   max-width: 1100px;
-  margin: 6rem auto;
+  margin: 0 auto;
   padding: 0 2rem;
   overflow: hidden;
+}
+
+.app-with-navbar .container {
+  margin-top: 6rem;
 }
 
 /* Text Styles */
@@ -179,10 +183,7 @@ ul {
   transition: border 0.3s ease;
 }
 
-.form input[type='text']:focus,
-.form input[type='email']:focus,
-.form input[type='password']:focus,
-.form input[type='number']:focus,
+.form input:focus,
 .form select:focus,
 .form textarea:focus {
   outline: none;

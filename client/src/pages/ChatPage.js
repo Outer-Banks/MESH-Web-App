@@ -112,6 +112,7 @@ const ChatPage = () => {
   const [loading, setLoading] = useState(true);
   const [showAttachMenu, setShowAttachMenu] = useState(false);
   const messagesEndRef = useRef(null);
+  const prevMessagesLengthRef = useRef(0);
 
   // Format date
   const formatTime = (dateString) => {
@@ -148,11 +149,29 @@ const ChatPage = () => {
   }, [id]);
 
   useEffect(() => {
-    // Scroll to bottom of messages when they change
-    if (messagesEndRef.current) {
+    // Only scroll to bottom when new messages are added, not when switching chats
+    if (!activeChat) return;
+    
+    const currentMessagesLength = activeChat.messages.length;
+    
+    // Check if we're adding a new message (not just switching chats)
+    const isNewMessage = currentMessagesLength > prevMessagesLengthRef.current;
+    
+    // Update the previous messages length reference
+    prevMessagesLengthRef.current = currentMessagesLength;
+    
+    // Only scroll if it's a new message
+    if (isNewMessage && messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [activeChat]);
+
+  useEffect(() => {
+    // Reset the previous messages length when switching chats
+    if (activeChat) {
+      prevMessagesLengthRef.current = activeChat.messages.length;
+    }
+  }, [activeChat?.id]);
 
   const handleSendMessage = (e) => {
     e.preventDefault();

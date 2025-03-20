@@ -1,0 +1,42 @@
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.logo:hover {
+  opacity: 0.9;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-image {
+  height: 36px;
+  width: auto;
+  border-radius: 4px;
+  background-color: transparent;
+  /* Remove white background by making it transparent */
+  mix-blend-mode: multiply;
+}
+
+.logo-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary-color, #e53935);
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+  .logo-image {
+    height: 28px;
+  }
+  
+  .logo-text {
+    font-size: 18px;
+  }
+}

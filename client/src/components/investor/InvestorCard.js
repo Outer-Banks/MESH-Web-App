@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import defaultImage from '../../assets/default-investor.jpg';
+import getImagePath from '../../utils/imagePaths';
 import './InvestorCard.css';
 
 const InvestorCard = ({ investor }) => {
@@ -16,7 +17,7 @@ const InvestorCard = ({ investor }) => {
       <div className="investor-header">
         <div className="avatar">
           <img 
-            src={avatar || defaultImage} 
+            src={getImagePath(avatar) || defaultImage} 
             alt={name} 
             onError={handleImageError}
           />

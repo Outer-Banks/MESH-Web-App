@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import logoImage from '../../assets/logo.png';
+import './Logo.css';
 
 const Logo = () => {
   return (
     <Link to="/" className="logo">
-      <span className="logo-text">
-        <span className="logo-m">M</span>
-        <span className="logo-e">E</span>
-        <span className="logo-s">S</span>
-        <span className="logo-h">H</span>
-      </span>
+      <div className="logo-container">
+        <img src={logoImage} alt="MESH Logo" className="logo-image" />
+        <span className="logo-text">MESH</span>
+      </div>
     </Link>
   );
 };

@@ -41,14 +41,14 @@ const DashboardPage = () => {
           <div className="dashboard-actions">
             <div className="card">
               <h3 className="text-primary">Investor Dashboard</h3>
-              <p>Investor features coming soon!</p>
+              <p>Manage your investment opportunities and portfolio</p>
               <div className="dashboard-actions">
-                <button className="btn btn-primary" disabled>
+                <Link to="/browse/startups" className="btn btn-primary">
                   <i className="fas fa-search"></i> Browse Startups
-                </button>
-                <button className="btn btn-dark" disabled>
+                </Link>
+                <Link to="/portfolio" className="btn btn-dark">
                   <i className="fas fa-briefcase"></i> Manage Portfolio
-                </button>
+                </Link>
               </div>
             </div>
           </div>

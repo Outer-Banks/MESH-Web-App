@@ -4,6 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 import PostCard from '../components/posts/PostCard';
 import StartupCard from '../components/startup/StartupCard';
 import InvestorCard from '../components/investor/InvestorCard';
+import getImagePath from '../utils/imagePaths';
 import './ForYouPage.css';
 
 // Dummy data for posts
@@ -17,8 +18,8 @@ const dummyPosts = [
       role: 'startup',
       avatar: '/images/avatars/startup1.jpg'
     },
-    content: 'Excited to announce our new AI-powered platform that helps businesses automate customer support!',
-    image: '/images/posts/tech-post.jpg',
+    content: 'Congratulations to our team for building our AI-powered platform that helps businesses automate customer support!',
+    image: '/images/posts/SIM_INC.jpg',
     likes: 42,
     comments: 8,
     timestamp: '2025-03-18T14:30:00'

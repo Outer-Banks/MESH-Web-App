@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 import defaultImage from '../../assets/default-startup.jpg';
+import getImagePath from '../../utils/imagePaths';
 import './StartupCard.css';
 
-const StartupCard = ({ startup }) => {
+const StartupCard = ({ startup, handleConnect }) => {
+  const { user } = useContext(AuthContext);
   const { id, name, avatar, industry, location, description, fundingNeeded } = startup;
   
   // Format funding amount
@@ -21,12 +24,16 @@ const StartupCard = ({ startup }) => {
     e.target.src = defaultImage;
   };
 
+  // Check if this is TechInnovate
+  const isTechInnovate = name === 'TechInnovate';
+
   return (
     <div className="startup-card">
+      {isTechInnovate && <div className="featured-banner">Featured Startup</div>}
       <div className="startup-header">
         <div className="avatar">
           <img 
-            src={avatar || defaultImage} 
+            src={getImagePath(avatar) || defaultImage} 
             alt={name} 
             onError={handleImageError}
           />
@@ -52,15 +59,34 @@ const StartupCard = ({ startup }) => {
           <span className="funding-label">Funding Needed:</span>
           <span className="funding-amount">{formatFunding(fundingNeeded)}</span>
         </div>
+        
+        {/* Progress display */}
+        <div className="funding-progress">
+          <div className="progress-bar-container">
+            {/* Randomly generate progress percentage for demo purposes */}
+            <div 
+              className="progress-bar" 
+              style={{ width: `${Math.floor(Math.random() * 80) + 10}%` }}
+            ></div>
+          </div>
+          <div className="progress-text">
+            <span>{Math.floor(Math.random() * 80) + 10}% Funded</span>
+          </div>
+        </div>
       </div>
       
       <div className="startup-actions">
         <Link to={`/profile/startup/${id}`} className="btn btn-primary btn-sm">
           <i className="fas fa-info-circle"></i> View Profile
         </Link>
-        <Link to={`/chat/startup/${id}`} className="btn btn-dark btn-sm">
-          <i className="fas fa-comments"></i> Connect
-        </Link>
+        {user && user.role === 'investor' && handleConnect && (
+          <button 
+            onClick={() => handleConnect(startup)} 
+            className="btn btn-dark btn-sm"
+          >
+            <i className="fas fa-handshake"></i> Connect
+          </button>
+        )}
       </div>
     </div>
   );
