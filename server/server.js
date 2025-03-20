@@ -18,6 +18,8 @@ app.use(cors());
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/startup', require('./routes/startup'));
+app.use('/api/connections', require('./routes/connections'));
+app.use('/api/investment-proposals', require('./routes/investmentProposals'));
 
 // Base route
 app.get('/', (req, res) => {
