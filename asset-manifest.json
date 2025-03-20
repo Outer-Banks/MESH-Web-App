@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/MESH/static/css/main.39c2ec0b.css",
+    "main.js": "/MESH/static/js/main.5e37ccdb.js",
+    "static/media/default-post.jpg": "/MESH/static/media/default-post.c654063e074722a27183.jpg",
+    "static/media/default-investor.jpg": "/MESH/static/media/default-investor.fd7651b2313e27b436ab.jpg",
+    "static/media/logo.png": "/MESH/static/media/logo.ac12d3369c37a9314574.png",
+    "static/media/Graphs.jpg": "/MESH/static/media/Graphs.7932b275be3388feecb0.jpg",
+    "static/media/default-startup.jpg": "/MESH/static/media/default-startup.e798430df7f018af33bd.jpg",
+    "index.html": "/MESH/index.html",
+    "main.39c2ec0b.css.map": "/MESH/static/css/main.39c2ec0b.css.map",
+    "main.5e37ccdb.js.map": "/MESH/static/js/main.5e37ccdb.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.39c2ec0b.css",
+    "static/js/main.5e37ccdb.js"
+  ]
+}
